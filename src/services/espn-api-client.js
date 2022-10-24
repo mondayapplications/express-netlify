@@ -1,9 +1,6 @@
-const _ = require("lodash");
 const fetch = require("node-fetch");
-const sdv = require("sportsdataverse");
-const PlayerService = require("./player-service");
 
-class TeamService {
+class EspnApiClient {
   static async getTeamList() {
     const baseUrl =
       "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams";
@@ -16,17 +13,24 @@ class TeamService {
       },
     };
 
-    return await fetch(fullUrl, fetchOptions);
+    const { data } = await fetch(fullUrl, fetchOptions);
+    return data;
   }
 
   static async getTeamPlayers(teamId) {
-    const { team } = await sdv.nba.getTeamPlayers(teamId);
-    const { athletes: players } = team;
-    const serializedPlayers = players.map((player) =>
-      PlayerService.serializePlayer(player, team)
-    );
-    return serializedPlayers;
+    const baseUrl = `http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}`;
+    const fullUrl = `${baseUrl}?enable=roster`;
+
+    const fetchOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await fetch(fullUrl, fetchOptions);
+    return data;
   }
 }
 
-module.exports = TeamService;
+module.exports = EspnApiClient;
