@@ -22,7 +22,8 @@ class SwishService {
     console.log(body);
 
     const response = await axios.post(SWISH_MACHINE_URL, body);
-    return { body, response };
+
+    return { body: JSON.stringify(body), response: JSON.stringify(response) };
   }
 }
 
