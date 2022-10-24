@@ -22,7 +22,7 @@ class SwishService {
     console.log(body);
 
     const response = await axios.post(SWISH_MACHINE_URL, body);
-    return body;
+    return { body, response };
   }
 }
 
