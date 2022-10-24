@@ -18,6 +18,7 @@ class SwishService {
       TAG: "addUpdatePlayersBasicInfo",
       TESTON: "someone",
       DATA: serializedPlayers,
+      DATA_STR: JSON.stringify(serializedPlayers),
     };
 
     console.log(body);
