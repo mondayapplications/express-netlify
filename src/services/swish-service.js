@@ -1,5 +1,4 @@
-const _ = require("lodash");
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 const BASE_URL = "http://www.lior-kedem.com";
 const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
@@ -15,15 +14,7 @@ class SwishService {
       DATA: JSON.stringify(serializedPlayers),
     };
 
-    const fetchOptions = {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const response = await fetch(SWISH_MACHINE_URL, fetchOptions);
+    const response = await axios.post(SWISH_MACHINE_URL, body);
     return body;
   }
 }
