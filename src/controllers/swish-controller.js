@@ -1,6 +1,5 @@
-const { result } = require("lodash");
 const TeamService = require("../services/team-service");
-// const SwishService = require("../services/swish-service");
+const SwishService = require("../services/swish-service");
 
 class SwishController {
   static async addUpdatePlayersBasicInfo(req, res) {
