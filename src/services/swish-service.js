@@ -6,7 +6,9 @@ const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
 class SwishService {
   static async addUpdatePlayersBasicInfo(players) {
     const playersArr = Object.values(players);
-    const serializedPlayers = playersArr.map((player) =>
+    const smallSample = [playersArr[0], playersArr[1]];
+    // const serializedPlayers = playersArr.map((player) =>
+    const serializedPlayers = smallSample.map((player) =>
       convertKeyToUppercase(player)
     );
     const body = {
@@ -14,7 +16,9 @@ class SwishService {
       DATA: JSON.stringify(serializedPlayers),
     };
 
-    const response = await axios.post(SWISH_MACHINE_URL, body);
+    console.log(body);
+
+    //const response = await axios.post(SWISH_MACHINE_URL, body);
     return body;
   }
 }
