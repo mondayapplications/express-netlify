@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "netlify-lambda": "^2.0.15",
-    "serverless-http": "^3.0.3",
-    "sportsdataverse": "^1.1.4"
+    "serverless-http": "^3.0.3"
   }
 }
