@@ -1,11 +1,13 @@
 const _ = require("lodash");
 const EspnApiClient = require("./espn-api-client");
+const MySqlApiClient = require("./mysql-api-client");
 const PlayerService = require("./player-service");
 
 class TeamService {
   static async getTeams() {
-    const teams = await EspnApiClient.getTeamList();
-    return teams.sports[0].leagues[0].teams;
+    await MySqlApiClient.getVersions();
+    // const teams = await EspnApiClient.getTeamList();
+    // return teams.sports[0].leagues[0].teams;
   }
 
   static async getTeamPlayers(teamId) {
