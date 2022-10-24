@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fetch = require("node-fetch");
 
 const BASE_URL = "http://www.lior-kedem.com";
 const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
@@ -21,26 +22,19 @@ class SwishService {
 
     console.log(body);
 
-    // const usersName = JSON.stringify({ name: "John Doe" });
-    const customConfig = {
+    // const response = await axios.post(SWISH_MACHINE_URL, body);
+    // return { status: response.status, data: response.data, body };
+
+    const fetchOptions = {
+      method: "POST",
+      body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
       },
     };
-
-    // const result = await axios.post(
-    //   "https://testapi.org/post",
-    //   usersName,
-    //   customConfig
-    // );
-
-    const response = await axios.post(
-      SWISH_MACHINE_URL,
-      JSON.stringify(body),
-      customConfig
-    );
-
-    return { status: response.status, data: response.data, body };
+    const response = await fetch(url, fetchOptions);
+    // const result = await response.json();
+    return { status: response.status, body };
   }
 }
 
