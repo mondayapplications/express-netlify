@@ -16,28 +16,15 @@ class SwishService {
     );
     const body = {
       TAG: "addUpdatePlayersBasicInfo",
+      TESTON: "someone",
       DATA: serializedPlayers,
     };
 
     console.log(body);
 
-    // const usersName = JSON.stringify({ name: "John Doe" });
-    const customConfig = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    // const result = await axios.post(
-    //   "https://testapi.org/post",
-    //   usersName,
-    //   customConfig
-    // );
-
     const response = await axios.post(
-      SWISH_MACHINE_URL,
-      JSON.stringify(body),
-      customConfig
+      SWISH_MACHINE_URL + "?TEST=something",
+      body
     );
 
     return { status: response.status, data: response.data, body };
