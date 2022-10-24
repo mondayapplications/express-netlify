@@ -1,35 +1,29 @@
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 class EspnApiClient {
   static async getTeamList() {
     const baseUrl =
       "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams";
-    const fullUrl = `${baseUrl}?limit=1000`;
-
-    const fetchOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const params = {
+      limit: 1000,
     };
 
-    const { data } = await fetch(fullUrl, fetchOptions);
-    return data;
+    const res = await axios.get(baseUrl, {
+      params,
+    });
+
+    return res.data;
   }
 
   static async getTeamPlayers(teamId) {
     const baseUrl = `http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${teamId}`;
-    const fullUrl = `${baseUrl}?enable=roster`;
-
-    const fetchOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const params = {
+      enable: "roster",
     };
-
-    const { data } = await fetch(fullUrl, fetchOptions);
-    return data;
+    const res = await axios.get(baseUrl, {
+      params,
+    });
+    return res.data;
   }
 }
 
