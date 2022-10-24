@@ -8,7 +8,7 @@ class SwishService {
     const playersArr = Object.values(players);
     const fakePlayer = { ...playersArr[0] };
     fakePlayer.id = "lawer";
-    fakePlayer.name = "WAS";
+    fakePlayer.team = "CLE";
     const smallSample = [fakePlayer, playersArr[0], playersArr[1]];
     // const serializedPlayers = playersArr.map((player) =>
     const serializedPlayers = smallSample.map((player) =>
@@ -21,7 +21,24 @@ class SwishService {
 
     console.log(body);
 
-    const response = await axios.post(SWISH_MACHINE_URL, body);
+    // const usersName = JSON.stringify({ name: "John Doe" });
+    const customConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // const result = await axios.post(
+    //   "https://testapi.org/post",
+    //   usersName,
+    //   customConfig
+    // );
+
+    const response = await axios.post(
+      SWISH_MACHINE_URL,
+      JSON.stringify(body),
+      customConfig
+    );
 
     return { status: response.status, data: response.data, body };
   }
