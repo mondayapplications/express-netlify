@@ -13,7 +13,7 @@ class SwishService {
     );
     const body = {
       TAG: "addUpdatePlayersBasicInfo",
-      DATA: JSON.stringify(serializedPlayers),
+      DATA: serializedPlayers,
     };
 
     console.log(body);
