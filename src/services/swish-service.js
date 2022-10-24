@@ -6,27 +6,22 @@ const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
 class SwishService {
   static async addUpdatePlayersBasicInfo(players) {
     const playersArr = Object.values(players);
-    const fakePlayer = { ...playersArr[0] };
-    fakePlayer.id = "lawer";
-    fakePlayer.team = "CLE";
-    const smallSample = [fakePlayer, playersArr[0], playersArr[1]];
-    // const serializedPlayers = playersArr.map((player) =>
-    const serializedPlayers = smallSample.map((player) =>
+    // const fakePlayer = { ...playersArr[0] };
+    // fakePlayer.id = "lawer";
+    // fakePlayer.team = "CLE";
+    // const smallSample = [fakePlayer, playersArr[0], playersArr[1]];
+    const serializedPlayers = playersArr.map((player) =>
+      // const serializedPlayers = smallSample.map((player) =>
       convertKeyToUppercase(player)
     );
     const body = {
       TAG: "addUpdatePlayersBasicInfo",
-      TESTON: "someone",
-      DATA: serializedPlayers,
-      DATA_STR: JSON.stringify(serializedPlayers),
+      DATA: JSON.stringify(serializedPlayers),
     };
 
     console.log(body);
 
-    const response = await axios.post(
-      SWISH_MACHINE_URL + "?TEST=something",
-      body
-    );
+    const response = await axios.post(SWISH_MACHINE_URL, body);
 
     return { status: response.status, data: response.data, body };
   }
