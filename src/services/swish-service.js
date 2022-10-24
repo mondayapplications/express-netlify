@@ -18,7 +18,9 @@ class SwishService {
 
     console.log(body);
 
-    const fullUrl = `${SWISH_MACHINE_URL}?TAG=${body.TAG}&DATA=${body.DATA}`;
+    const fullUrl = `${SWISH_MACHINE_URL}?TAG=${body.TAG}&DATA=${JSON.stringify(
+      body.DATA
+    )}`;
 
     // const response = await axios.post(SWISH_MACHINE_URL, body);
     const response = await axios.post(fullUrl, {});
