@@ -36,7 +36,7 @@ class GameService {
         const playerId = player.athlete.id;
         const gp = 1;
 
-        gamePlayersBoxScore[playerId] = {
+        gamePlayersBoxScore[playerId] = SerializationService.serializeGameLog({
           playerId,
           court,
           result,
@@ -44,7 +44,7 @@ class GameService {
           opp,
           gp,
           ...playerBoxScore,
-        };
+        });
       }
       oppIndex--;
     }

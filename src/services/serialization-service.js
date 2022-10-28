@@ -20,6 +20,18 @@ class SerializationService {
     return serializedPlayer;
   }
 
+  static serializeGameLog(gameLog) {
+    const { team, opp } = gameLog;
+
+    const serializedGameLog = {
+      ...gameLog,
+      team: this.serializeTeamAbbreviation(team),
+      opp: this.serializeTeamAbbreviation(opp),
+    };
+
+    return serializedGameLog;
+  }
+
   static serializeTeamAbbreviation(team) {
     switch (team) {
       case "SA":
