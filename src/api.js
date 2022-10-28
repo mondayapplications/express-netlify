@@ -18,6 +18,12 @@ router.get(
   SwishController.addUpdatePlayersBasicInfo
 );
 
+
+router.get(
+  "/add-daily-game-logs",
+  SwishController.addDailyGameLogs
+);
+
 app.use("/.netlify/functions/api", router);
 
 module.exports.handler = serverless(app);
