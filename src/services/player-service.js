@@ -9,7 +9,7 @@ class PlayerService {
       name,
       position: serializePosition(position.abbreviation),
       height: serializeHeight(displayHeight),
-      team: team.abbreviation,
+      team: serializeTeamAbbreviation(team.abbreviation),
       health: "",
       image: "",
       image_credit: "",
@@ -19,6 +19,26 @@ class PlayerService {
 
     return serializedPlayer;
   }
+}
+
+function serializeTeamAbbreviation(team) {
+  switch (team) {
+    case "SA":
+      return "SAS";
+    case "GS":
+      return "GSW";
+    case "PHX":
+      return "PHO";
+    case "UTAH":
+      return "UTA";
+    case "NY":
+      return "NYK";
+    case "NO":
+      return "NOP";
+    case "WSH":
+      return "WAS";
+  }
+  return team;
 }
 
 function serializePosition(position) {
