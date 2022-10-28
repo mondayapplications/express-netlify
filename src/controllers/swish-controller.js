@@ -4,6 +4,8 @@ const SwishService = require("../services/swish-service");
 class SwishController {
   static async addUpdatePlayersBasicInfo(req, res) {
     try {
+      const { debugMode } = req.query;
+
       let players = {};
       const teams = await TeamService.getTeams();
       for (const { team } of teams) {
@@ -15,7 +17,9 @@ class SwishController {
         }
       }
 
-      const result = await SwishService.addUpdatePlayersBasicInfo(players);
+      const result = await SwishService.addUpdatePlayersBasicInfo(players, {
+        debugMode,
+      });
       res.json(result);
     } catch (error) {
       res.json(error);
