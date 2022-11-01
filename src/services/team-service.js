@@ -1,6 +1,6 @@
 const _ = require("lodash");
 const EspnApiClient = require("./espn-api-client");
-const PlayerService = require("./player-service");
+const SerializationService = require("./serialization-service");
 
 class TeamService {
   static async getTeams() {
@@ -12,7 +12,7 @@ class TeamService {
     const { team } = await EspnApiClient.getTeamPlayers(teamId);
     const { athletes: players } = team;
     const serializedPlayers = players.map((player) =>
-      PlayerService.serializePlayer(player, team)
+      SerializationService.serializePlayer(player, team)
     );
     return serializedPlayers;
   }

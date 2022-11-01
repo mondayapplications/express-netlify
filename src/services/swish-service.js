@@ -21,6 +21,24 @@ class SwishService {
     const response = await axios.post(SWISH_MACHINE_URL, body);
     return { debugMode, body, status: response?.status, data: response?.data };
   }
+
+  static async addDailyGameLogs(dailyGameLogs, { debugMode }) {
+    const playersArr = Object.values(dailyGameLogs);
+    const serializedPlayers = playersArr.map((player) =>
+      convertKeyToUppercase(player)
+    );
+    const body = {
+      TAG: "addDailyGameLogs",
+      DATA: JSON.stringify(serializedPlayers),
+    };
+
+    if (debugMode) {
+      return { debugMode, body };
+    }
+
+    const response = await axios.post(SWISH_MACHINE_URL, body);
+    return { debugMode, body, status: response?.status, data: response?.data };
+  }
 }
 
 function convertKeyToUppercase(obj) {
