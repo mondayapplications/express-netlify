@@ -30,22 +30,31 @@ class SwishController {
 
   static async addDailyGameLogs(req, res) {
     try {
-      const { debugMode, year, month, day } = req.query;
+      const { debugMode } = req.query;
+      let { year, month, day } = req.query;
+
+      const dateObj = new Date();
+      dateObj.setDate(dateObj.getDate() - 1);
+      year = year || dateObj.getUTCFullYear();
+      month = month || dateObj.getUTCMonth() + 1; //months from 1-12
+      day = day || dateObj.getUTCDate();
+
+      const games = await GameService.getGamesByDate(year, month, day);
 
       const dailyGameLogs = {};
-      const games = await GameService.getGamesByDate(year, month, day);
 
       for (const game of games) {
         const { id: gameId } = game;
         const gamePlayersBoxScore = await GameService.getGamePlayersBoxScore(
-          gameId
+          gameId,
+          { year, month, day }
         );
 
         console.log("-----------gamePlayersBoxScore", gamePlayersBoxScore);
         const gamePlayersBoxScoreArr = Object.values(gamePlayersBoxScore);
 
         for (const playerBoxScore of gamePlayersBoxScoreArr) {
-          dailyGameLogs[playerBoxScore.playerId] = playerBoxScore;
+          dailyGameLogs[playerBoxScore.player_id] = playerBoxScore;
         }
       }
 
