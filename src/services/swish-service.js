@@ -36,8 +36,8 @@ class SwishService {
       return { debugMode, body };
     }
 
-    // const response = await axios.post(SWISH_MACHINE_URL, body);
-    // return { debugMode, body, status: response?.status, data: response?.data };
+    const response = await axios.post(SWISH_MACHINE_URL, body);
+    return { debugMode, body, status: response?.status, data: response?.data };
   }
 }
 
