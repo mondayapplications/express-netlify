@@ -1,4 +1,5 @@
 const axios = require("axios");
+const moment = require("moment");
 
 const BASE_URL = "http://www.lior-kedem.com";
 const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
@@ -41,27 +42,13 @@ class SwishService {
   }
 
   static async calculatePeriodAverages(daysBack, { debugMode }) {
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
-    const firstDate = new Date();
-    const lastDate = new Date();
-    lastDate.setDate(today.getDate() - 1);
+    const now = moment();
+    const yesterday = now.add(-1, "d");
     let period, firstDay, lastDay;
-
-    let year = yesterday.getUTCFullYear();
-    let month = yesterday.getUTCMonth() + 1; //months from 1-12
-    let day = yesterday.getUTCDate();
-
-    lastDay = year + "-" + month + "-" + day;
+    lastDay = yesterday.format("YYYY-MM-DD");
 
     if (daysBack) {
-      firstDate.setDate(yesterday.getDate() - daysBack);
-      year = firstDate.getUTCFullYear();
-      month = firstDate.getUTCMonth() + 1; //months from 1-12
-      day = firstDate.getUTCDate();
-
-      firstDay = year + "-" + month + "-" + day;
+      firstDay = yesterday.add(-daysBack, "d").format("YYYY-MM-DD");
       period = "LAST_" + daysBack;
     } else {
       firstDay = "2022-10-18";
