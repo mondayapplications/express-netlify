@@ -4,24 +4,14 @@ const SerializationService = require("./serialization-service");
 
 class GameService {
   static async getGamesByDate(year, month, day) {
-    const dateObj = new Date();
-    dateObj.setDate(dateObj.getDate() - 1);
-    const defaultYear = dateObj.getUTCFullYear();
-    const defaultMonth = dateObj.getUTCMonth() + 1; //months from 1-12
-    const defaultDay = dateObj.getUTCDate();
-
-    const scoreboard = await EspnApiClient.getScoreboard(
-      year || defaultYear,
-      month || defaultMonth,
-      day || defaultDay
-    );
+    const scoreboard = await EspnApiClient.getScoreboard(year, month, day);
     return scoreboard.events;
   }
 
-  static async getGamePlayersBoxScore(gameId) {
+  static async getGamePlayersBoxScore(gameId, { year, month, day }) {
     const gameBoxscore = await EspnApiClient.getBoxScore(gameId);
     const gamePlayersBoxScore = {};
-
+    const gamedate = year + "-" + month + "-" + day;
     const { players } = gameBoxscore;
     const awayTeamIndex = 0;
     let oppIndex = 1;
@@ -38,7 +28,8 @@ class GameService {
         const gp = 1;
 
         gamePlayersBoxScore[playerId] = SerializationService.serializeGameLog({
-          playerId,
+          gamedate,
+          player_id: playerId,
           court,
           result,
           team,
@@ -99,6 +90,7 @@ function getGamePlayerBoxScore(player) {
       pts,
     };
   }
+  return {};
 }
 
 function getGameResultByTeam(team, oppTeam) {
