@@ -39,6 +39,51 @@ class SwishService {
     const response = await axios.post(SWISH_MACHINE_URL, body);
     return { debugMode, body, status: response?.status, data: response?.data };
   }
+
+  static async calculatePeriodAverages(daysBack, { debugMode }) {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    const firstDate = new Date();
+    const lastDate = new Date();
+    lastDate.setDate(today.getDate() - 1);
+    let period, firstDay, lastDay;
+
+    let year = yesterday.getUTCFullYear();
+    let month = yesterday.getUTCMonth() + 1; //months from 1-12
+    let day = yesterday.getUTCDate();
+
+    lastDay = year + "-" + month + "-" + day;
+
+    if (daysBack) {
+      firstDate.setDate(yesterday.getDate() - daysBack);
+      year = firstDate.getUTCFullYear();
+      month = firstDate.getUTCMonth() + 1; //months from 1-12
+      day = firstDate.getUTCDate();
+
+      firstDay = year + "-" + month + "-" + day;
+      period = "LAST_" + daysBack;
+    } else {
+      firstDay = "2022-10-18";
+      period = "CURR_SEASON";
+    }
+
+    const body = {
+      TAG: "calculatePeriodAverages",
+      DATA: JSON.stringify({
+        FIRST_DAY: firstDay,
+        LAST_DAY: lastDay,
+        PERIOD: period,
+      }),
+    };
+
+    if (debugMode) {
+      return { debugMode, body };
+    }
+
+    const response = await axios.post(SWISH_MACHINE_URL, body);
+    return { debugMode, body, status: response?.status, data: response?.data };
+  }
 }
 
 function convertKeyToUppercase(obj) {

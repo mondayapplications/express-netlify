@@ -18,10 +18,15 @@ router.get(
   SwishController.addUpdatePlayersBasicInfo
 );
 
-
 router.get(
   "/add-daily-game-logs",
   SwishController.addDailyGameLogs
+);
+
+
+router.get(
+  "/calculate-period-averages",
+  SwishController.calculatePeriodAverages
 );
 
 app.use("/.netlify/functions/api", router);
