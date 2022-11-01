@@ -49,7 +49,7 @@ class SwishService {
 
     if (daysBack) {
       firstDay = yesterday.add(-daysBack, "d").format("YYYY-MM-DD");
-      period = "LAST_" + daysBack;
+      period = "LAST" + daysBack;
     } else {
       firstDay = "2022-10-18";
       period = "CURR_SEASON";
@@ -57,11 +57,9 @@ class SwishService {
 
     const body = {
       TAG: "calculatePeriodAverages",
-      DATA: JSON.stringify({
-        FIRST_DAY: firstDay,
-        LAST_DAY: lastDay,
-        PERIOD: period,
-      }),
+      FIRST_DAY: firstDay,
+      LAST_DAY: lastDay,
+      PERIOD: period,
     };
 
     if (debugMode) {
