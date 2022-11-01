@@ -67,6 +67,19 @@ class SwishController {
       console.log("--------this is my error----------", error);
     }
   }
+
+  static async calculatePeriodAverages(req, res) {
+    try {
+      const { daysBack, debugMode } = req.query;
+      const result = await SwishService.calculatePeriodAverages(daysBack, {
+        debugMode,
+      });
+      res.json(result);
+    } catch (error) {
+      res.json(error);
+      console.log("--------this is my error----------", error);
+    }
+  }
 }
 
 module.exports = SwishController;

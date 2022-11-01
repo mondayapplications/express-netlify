@@ -1,4 +1,5 @@
 const axios = require("axios");
+const moment = require("moment");
 
 const BASE_URL = "http://www.lior-kedem.com";
 const SWISH_MACHINE_URL = `${BASE_URL}/swish/machine_merged.php`;
@@ -30,6 +31,37 @@ class SwishService {
     const body = {
       TAG: "addDailyGameLogs",
       DATA: JSON.stringify(serializedPlayers),
+    };
+
+    if (debugMode) {
+      return { debugMode, body };
+    }
+
+    const response = await axios.post(SWISH_MACHINE_URL, body);
+    return { debugMode, body, status: response?.status, data: response?.data };
+  }
+
+  static async calculatePeriodAverages(daysBack, { debugMode }) {
+    const now = moment();
+    const yesterday = now.add(-1, "d");
+    let period, firstDay, lastDay;
+    lastDay = yesterday.format("YYYY-MM-DD");
+
+    if (daysBack) {
+      firstDay = yesterday.add(-daysBack, "d").format("YYYY-MM-DD");
+      period = "LAST_" + daysBack;
+    } else {
+      firstDay = "2022-10-18";
+      period = "CURR_SEASON";
+    }
+
+    const body = {
+      TAG: "calculatePeriodAverages",
+      DATA: JSON.stringify({
+        FIRST_DAY: firstDay,
+        LAST_DAY: lastDay,
+        PERIOD: period,
+      }),
     };
 
     if (debugMode) {
