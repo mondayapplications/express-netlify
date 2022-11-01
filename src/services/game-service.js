@@ -5,6 +5,7 @@ const SerializationService = require("./serialization-service");
 class GameService {
   static async getGamesByDate(year, month, day) {
     const dateObj = new Date();
+    dateObj.setDate(dateObj.getDate() - 1);
     const defaultYear = dateObj.getUTCFullYear();
     const defaultMonth = dateObj.getUTCMonth() + 1; //months from 1-12
     const defaultDay = dateObj.getUTCDate();
