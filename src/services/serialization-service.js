@@ -6,11 +6,11 @@ class SerializationService {
 
     const serializedPlayer = {
       id,
-      name,
+      name: this.serializeName(name),
       position: this.serializePosition(position.abbreviation),
       height: this.serializeHeight(displayHeight),
       team: this.serializeTeamAbbreviation(team.abbreviation),
-      health: "",
+      health: "HEALTHY",
       image: "",
       image_credit: "",
       image_credit_url: "",
@@ -18,6 +18,10 @@ class SerializationService {
     };
 
     return serializedPlayer;
+  }
+
+  static serializeName(name) {
+    return name.replace("'", "''");
   }
 
   static serializeGameLog(gameLog) {
