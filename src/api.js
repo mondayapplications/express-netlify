@@ -17,14 +17,19 @@ router.get(
   "/add-update-players-basic-info",
   SwishController.addUpdatePlayersBasicInfo
 );
-
-router.get(
-  "/add-daily-game-logs",
-  SwishController.addDailyGameLogs
+router.post(
+  "/add-update-players-basic-info",
+  SwishController.addUpdatePlayersBasicInfo
 );
 
+router.get("/add-daily-game-logs", SwishController.addDailyGameLogs);
+router.post("/add-daily-game-logs", SwishController.addDailyGameLogs);
 
 router.get(
+  "/calculate-period-averages",
+  SwishController.calculatePeriodAverages
+);
+router.post(
   "/calculate-period-averages",
   SwishController.calculatePeriodAverages
 );
