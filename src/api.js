@@ -28,11 +28,11 @@ async function handleWebhook1(req, res) {
     enable: "roster",
     everything,
   };
-  const res = await axios.get(baseUrl, {
+  const response = await axios.get(baseUrl, {
     params,
   });
 
-  res.json({ resData: !!res.data, ...everything });
+  res.json({ response: !!response.data, ...everything });
 }
 
 router.post("/webhook1", handleWebhook1);
