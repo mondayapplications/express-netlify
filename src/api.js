@@ -6,7 +6,7 @@ const app = express();
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.json({ hello: "world!!!" });
+  res.json({ hello: "express-netlify" });
 });
 
 router.get("/health", (req, res) => {
