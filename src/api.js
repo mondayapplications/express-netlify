@@ -13,6 +13,11 @@ router.get("/health", (req, res) => {
   res.json({ state: "healthy!!!" });
 });
 
+router.get("/webhook", (req, res) => {
+  const everything = req.body;
+  res.json({ state: !!req.body, ...everything });
+});
+
 router.get(
   "/add-update-players-basic-info",
   SwishController.addUpdatePlayersBasicInfo
