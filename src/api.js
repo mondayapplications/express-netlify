@@ -19,21 +19,23 @@ router.get("/webhook", (req, res) => {
   res.json({ state: !!req.body, ...everything });
 });
 
-router.post("/webhook1", async (req, res) => {
+async function handleWebhook1(req, res) {
   const everything = req.body;
   const baseUrl =
     "https://tubular-blini-69c554.netlify.app/.netlify/functions/api/webhook2";
 
   const params = {
     enable: "roster",
-    ...everything,
+    everything,
   };
   const res = await axios.get(baseUrl, {
     params,
   });
 
   res.json({ resData: !!res.data, ...everything });
-});
+}
+
+router.post("/webhook1", handleWebhook1);
 
 router.get("/webhook2", (req, res) => {
   const everything = req.query;
