@@ -1,5 +1,5 @@
 const express = require("express");
-const fetch = require("node-fetch");
+const axios = require("axios");
 const serverless = require("serverless-http");
 const SwishController = require("./controllers/swish-controller");
 
@@ -21,21 +21,24 @@ router.get("/webhook", (req, res) => {
 
 router.post("/webhook1", async (req, res) => {
   const everything = req.body;
-  const url =
+  const baseUrl =
     "https://tubular-blini-69c554.netlify.app/.netlify/functions/api/webhook2";
-  response = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify(everything || { inside: "nothing" }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+
+  const params = {
+    enable: "roster",
+    ...everything,
+  };
+  const res = await axios.get(baseUrl, {
+    params,
   });
-  res.json({ state: !!req.body, ...everything });
+
+  res.json({ resData: !!res.data, ...everything });
 });
 
 router.get("/webhook2", (req, res) => {
-  const everything = req.body;
-  res.json({ state: !!req.body, ...everything });
+  const everything = req.query;
+  const everything2 = req.params;
+  res.json({ state: !!req.query, everything, everything2 });
 });
 
 router.get(
